@@ -1,0 +1,62 @@
+﻿namespace Strategy;
+public class Implementation
+{
+    /// <summary>
+    /// Strategy
+    /// </summary>
+    public interface IExportService
+    {
+        void Export(Order order);
+    }
+
+    /// <summary>
+    /// ConcreteStrategy
+    /// </summary>
+    public class JsonExportService : IExportService
+    {
+        public void Export(Order order)
+        {
+            Console.WriteLine($"Exporting {order.Name} to Json.");
+        }
+    }
+
+    /// <summary>
+    /// ConcreteStrategy
+    /// </summary>
+    public class XmlExportService : IExportService
+    {
+        public void Export(Order order)
+        {
+            Console.WriteLine($"Exporting {order.Name} to XML.");
+        }
+    }
+
+    /// <summary>
+    /// ConcreteStrategy
+    /// </summary>
+    public class CsvExportService : IExportService
+    {
+        public void Export(Order order)
+        {
+            Console.WriteLine($"Exporting {order.Name} to CSV.");
+        }
+    }
+
+    /// <summary>
+    /// Context
+    /// </summary>
+    public class Order
+    {
+        public string Customer { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public int Amount { get; set; }
+        public string? Description { get; set; }
+
+        public Order(string customer, string name, int amount)
+        {
+            Customer = customer;
+            Name = name;
+            Amount = amount;
+        }
+    }
+}
