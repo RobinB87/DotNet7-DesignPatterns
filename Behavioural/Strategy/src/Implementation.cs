@@ -57,11 +57,6 @@ public class Implementation
         public string? ExportedTo { get; set; }
         public string? Description { get; set; }
 
-        // Watch out that Export method can be called without IExportService being set.
-        // Fix this by requiring it via the constructor.
-        // Nowadays dependencies like this are often injected via an IOC container.
-        public IExportService? ExportService { get; set; }
-
         public Order(string customer, string name, int amount)
         {
             Customer = customer;
@@ -72,9 +67,10 @@ public class Implementation
         // Here the strategy is used to export the order, but
         // the order class does not know which concrete implementation of the strategy it uses.
         // All it knows something of type IExportService is used to export itself.
-        public void Export()
+        // Regarding the param: dependencies like this are often injected via an IOC container.
+        public void Export(IExportService exportService)
         {
-            ExportService?.Export(this);
+            exportService?.Export(this);
         }
     }
 }

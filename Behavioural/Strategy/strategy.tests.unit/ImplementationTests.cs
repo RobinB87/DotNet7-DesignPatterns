@@ -9,24 +9,21 @@ namespace Strategy.Tests.Unit
         [Fact]
         public void CsvExportServiceTest()
         {
-            Order.ExportService = new CsvExportService();
-            Order.Export();
+            Order.Export(new CsvExportService());
             Assert.Equal("Csv", Order.ExportedTo);
         }
 
         [Fact]
         public void JsonExportServiceTest()
         {
-            Order.ExportService = new JsonExportService();
-            Order.Export();
+            Order.Export(new JsonExportService());
             Assert.Equal("Json", Order.ExportedTo);
         }
 
         [Fact]
         public void XmlExportServiceTest()
         {
-            Order.ExportService = new XmlExportService();
-            Order.Export();
+            Order.Export(new XmlExportService());
             Assert.Equal("Xml", Order.ExportedTo);
         }
     }
