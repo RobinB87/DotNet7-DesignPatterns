@@ -14,8 +14,8 @@
 ///  
 /// Related patterns:
 ///  * Flyweight: stategy objects make good flyweights
-///  * Bridge and state: also based on composition, but solves different problem
-///  * 
+///  * Bridge and State: also based on composition, but solves different problem
+///  * Template Method
 /// </summary>
 public class Implementation
 {
