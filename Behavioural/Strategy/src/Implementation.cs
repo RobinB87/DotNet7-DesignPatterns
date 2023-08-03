@@ -1,4 +1,12 @@
 ﻿namespace Strategy;
+
+/// <summary>
+/// Use cases for Strategy Pattern:
+///  * when many related classes differ ONLY in their behaviour, not in their interface
+///  * when you need different variants of an algorithm which you want to be able to switch at runtime
+///  * when your algorithm uses data, code or dependencies that the clients should not know about
+///  * when a class defines many different behaviours which appear as a bunch of conditional statements in its method (large if / switch statements)
+/// </summary>
 public class Implementation
 {
     /// <summary>
