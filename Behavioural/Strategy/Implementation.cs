@@ -51,12 +51,21 @@ public class Implementation
         public string Name { get; set; } = string.Empty;
         public int Amount { get; set; }
         public string? Description { get; set; }
+        public IExportService? ExportService { get; set; }
 
         public Order(string customer, string name, int amount)
         {
             Customer = customer;
             Name = name;
             Amount = amount;
+        }
+
+        // Here the strategy is used to export the order, but
+        // the order class does not know which concrete implementation of the strategy it uses.
+        // All it knows something of type IExportService is used to export itself.
+        public void Export()
+        {
+            ExportService?.Export(this);
         }
     }
 }
