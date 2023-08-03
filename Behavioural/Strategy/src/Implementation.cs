@@ -6,6 +6,16 @@
 ///  * when you need different variants of an algorithm which you want to be able to switch at runtime
 ///  * when your algorithm uses data, code or dependencies that the clients should not know about
 ///  * when a class defines many different behaviours which appear as a bunch of conditional statements in its method (large if / switch statements)
+/// 
+/// Drawbacks:
+///  * If the client injects the strategy, it must be aware of how they differ
+///  * Maybe some strategies do not export the full order, etc
+///  * Additional objects are introduced with increased complexity
+///  
+/// Related patterns:
+///  * Flyweight: stategy objects make good flyweights
+///  * Bridge and state: also based on composition, but solves different problem
+///  * 
 /// </summary>
 public class Implementation
 {
