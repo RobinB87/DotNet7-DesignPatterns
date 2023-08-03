@@ -16,7 +16,8 @@ public class Implementation
     {
         public void Export(Order order)
         {
-            Console.WriteLine($"Exporting {order.Name} to Json.");
+            order.ExportedTo = "Json";
+            Console.WriteLine($"Exporting {order.Name} to {order.ExportedTo}.");
         }
     }
 
@@ -27,7 +28,8 @@ public class Implementation
     {
         public void Export(Order order)
         {
-            Console.WriteLine($"Exporting {order.Name} to XML.");
+            order.ExportedTo = "Xml";
+            Console.WriteLine($"Exporting {order.Name} to {order.ExportedTo}.");
         }
     }
 
@@ -38,7 +40,8 @@ public class Implementation
     {
         public void Export(Order order)
         {
-            Console.WriteLine($"Exporting {order.Name} to CSV.");
+            order.ExportedTo = "Csv";
+            Console.WriteLine($"Exporting {order.Name} to {order.ExportedTo}.");
         }
     }
 
@@ -50,6 +53,8 @@ public class Implementation
         public string Customer { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public int Amount { get; set; }
+
+        public string? ExportedTo { get; set; }
         public string? Description { get; set; }
         public IExportService? ExportService { get; set; }
 
