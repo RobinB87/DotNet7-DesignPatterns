@@ -6,7 +6,7 @@ public class ImplementationSalesTax
     /// </summary>
     public interface ISalesTax
     {
-        public int GetTax();
+        public decimal GetTax(Order order);
     }
     
     /// <summary>
@@ -14,9 +14,9 @@ public class ImplementationSalesTax
     /// </summary>
     public class SwedenSalesTax : ISalesTax
     {
-        public int GetTax()
+        public decimal GetTax(Order order)
         {
-            return 0;
+            return order.Price * 0.25m;
         }
     }
 
@@ -25,19 +25,19 @@ public class ImplementationSalesTax
     /// </summary>
     public class UsaSalesTax : ISalesTax
     {
-        public int GetTax()
+        public decimal GetTax(Order order)
         {
             return 0;
         }
     }
 
     /// <summary>
-    /// Concept
+    /// Context
     /// </summary>
     public class Order
     {
-        ShippingDetails ShippingDetails;
-        List<Item> Items;
+        public ShippingDetails ShippingDetails;
+        public List<Item> Items;
 
         public Order(ShippingDetails shippingDetails, List<Item> items)
         {
@@ -50,6 +50,12 @@ public class ImplementationSalesTax
     {
         public string OriginCountry { get; set; } = string.Empty;
         public string DestinationCountry { get; set; } = string.Empty;
+
+        public ShippingDetails(string originCountry, string destinationCountry)
+        {
+            OriginCountry = originCountry;
+            DestinationCountry = destinationCountry;
+        }
     }
 
     public class Item
@@ -58,6 +64,14 @@ public class ImplementationSalesTax
         public string Name { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public ItemType ItemType { get; set; }
+
+        public Item(string id, string name, decimal price, ItemType itemType)
+        {
+            Id = id;
+            Name = name;
+            Price = price;
+            ItemType = itemType;
+        }
     }
 
     public enum ItemType
