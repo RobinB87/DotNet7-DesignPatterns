@@ -4,7 +4,7 @@ public class ImplementationSalesTax
     /// <summary>
     /// Strategy
     /// </summary>
-    public interface ISalesTax
+    public interface ISalesTaxStrategy
     {
         public decimal GetTax(Order order);
     }
@@ -12,22 +12,51 @@ public class ImplementationSalesTax
     /// <summary>
     /// Concrete strategy
     /// </summary>
-    public class SwedenSalesTax : ISalesTax
+    public class SwedenSalesTaxStrategy : ISalesTaxStrategy
     {
         public decimal GetTax(Order order)
         {
-            return order.Price * 0.25m;
+            var destination = order.ShippingDetails.DestinationCountry.ToLowerInvariant();
+            var origin = order.ShippingDetails.OriginCountry.ToLowerInvariant();
+            if (destination != origin) return 0m;
+
+            var totalTax = 0m;
+            foreach (var item in order.Items)
+            {
+                switch (item.ItemType)
+                {
+                    case ItemType.Service:
+                        totalTax += item.Price * 0.06m;
+                        break;
+
+                    case ItemType.Literature:
+                        totalTax += item.Price * 0.08m;
+                        break;
+
+                    default:
+                        totalTax += item.Price * 0.05m;
+                        break;
+                }
+            }
+
+            return totalTax;
         }
     }
 
     /// <summary>
     /// Concrete strategy
     /// </summary>
-    public class UsaSalesTax : ISalesTax
+    public class UsaSalesTaxStrategy : ISalesTaxStrategy
     {
         public decimal GetTax(Order order)
         {
-            return 0;
+            switch (order.ShippingDetails.DestinationCountry.ToLowerInvariant())
+            {
+                case "la": return order.TotalPrice * 0.095m;
+                case "ny": return order.TotalPrice * 0.04m;
+                case "nyc": return order.TotalPrice * 0.045m;
+                default: return 0m;
+            }
         }
     }
 
@@ -38,11 +67,20 @@ public class ImplementationSalesTax
     {
         public ShippingDetails ShippingDetails;
         public List<Item> Items;
+        public decimal TotalPrice;
+        public ISalesTaxStrategy? ISalesTaxStrategy { get; set; }
 
         public Order(ShippingDetails shippingDetails, List<Item> items)
         {
             ShippingDetails = shippingDetails;
             Items = items;
+            TotalPrice = Items.Sum(item => item.Price);
+        }
+
+        public decimal GetTax()
+        {
+            if (ISalesTaxStrategy == null) return 0m;
+            return ISalesTaxStrategy.GetTax(this);
         }
     }
 
