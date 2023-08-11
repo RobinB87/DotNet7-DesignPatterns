@@ -28,7 +28,11 @@ Two important object oriented principles are followed by the gang of four in the
 	1) Program to an interface, not an implementation
 Clients remain unaware of the specific types of objects they use
 Clients remain unaware of the classes that implement these objects, they only know the interface
-Can also be implemented with the abstract class language feature
+Can also be implemented with the abstract class language feature, in general:
+	* use an abstract base class when you need to provide some basic functionality that can potentially be overriden, 
+	  eg: can declare some default functionality that is usable or overridable by all subclasses
+	* use an interface when you only need to specify the expected functionality of a class
+
 Commonly correlates to adhering to the open/closed principle (SOLID)
 
 	2) Favor object composition over class inheritance
